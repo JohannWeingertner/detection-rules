@@ -21,8 +21,6 @@ rules/
 | type | `query` (single-event KQL/ES\|QL/etc.), `sequence` (multi-event EQL/correlation) |
 | slug | short descriptive name |
 
-Examples: `windows_query_encoded_commands`, `windows_sequence_nightmare_eclipse_shieldbreak`.
-
 ## Current rules
 
 | Folder | Title | Type | Severity |
