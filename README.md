@@ -1,6 +1,6 @@
 # Detection Rules
 
-Custom SIEM detections. Native Elastic rules are the source of truth (including EQL sequences). Splunk implementations can be added per rule later.
+Started this to expand my skill set from just analyzing logs to detection engineering.
 
 ## Layout
 
