@@ -28,6 +28,7 @@ Examples: `windows_query_encoded_commands`, `windows_sequence_nightmare_eclipse_
 | Folder | Title | Type | Severity |
 |---|---|---|---|
 | `windows_query_encoded_commands` | Windows Encoded Commands | query | low |
+| `windows_query_suspicious_scheduled_task_powershell` | Suspicious Scheduled Task PowerShell Payload | query | medium |
 | `windows_sequence_nightmare_eclipse_shieldbreak` | Nightmare Eclipse ShieldBreak | sequence | critical |
 
 ## Re-import into Elastic

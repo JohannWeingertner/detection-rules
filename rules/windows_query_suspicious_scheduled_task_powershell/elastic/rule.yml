@@ -1,0 +1,53 @@
+rule_id: 70417816-7160-4bef-8182-d62cdbc8514a
+kibana_id: 73aabdee-d934-406b-acdc-812ecef05782
+name: "Windows Rule : Suspicious Scheduled Task PowerShell Payload"
+author:
+  - Johann Weingertner
+type: query
+language: kuery
+index:
+  - logs-*
+query: |
+  (
+    event.code : 1 AND
+    process.name : "schtasks.exe" AND
+    process.command_line.text : "/Create" AND
+    process.command_line.text : (
+      "powershell.exe" OR
+      "powershell" OR
+      "pwsh.exe" OR
+      "pwsh"
+    ) AND
+    process.command_line.text : (
+      "IEX" OR
+      "Invoke-Expression"
+    ) AND
+    process.command_line.text : (
+      "Invoke-WebRequest" OR
+      "iwr" OR
+      "DownloadString" OR
+      "DownloadFile" OR
+      "OpenRead" OR
+      "Invoke-RestMethod" OR
+      "irm" OR
+      "WebClient" OR
+      "Net.WebClient" OR
+      "System.Net.WebClient" OR
+      "System.Net.Http.HttpClient" OR
+      "HttpClient" OR
+      "Start-BitsTransfer" OR
+      "BitsTransfer"
+    )
+  )
+from: now-7m
+to: now
+interval: 5m
+enabled: true
+max_signals: 100
+risk_score: 47
+severity: medium
+version: 1
+revision: 3
+required_fields: []
+filters: []
+exceptions_list: []

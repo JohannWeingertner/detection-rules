@@ -1,0 +1,29 @@
+id: windows_query_suspicious_scheduled_task_powershell
+title: Suspicious Scheduled Task PowerShell Payload
+description: Detects scheduled tasks that execute PowerShell with download functionality and use IEX or Invoke-Expression to execute retrieved content.
+status: experimental
+severity: medium
+risk_score: 47
+author:
+  - name: Johann Weingertner
+    url: https://johannweingertner.github.io
+date: 2026-08-21
+modified: 2026-08-21
+tags:
+  - windows
+  - endpoint
+  - persistence
+  - powershell
+  - scheduled-task
+false_positives: []
+platforms:
+  - windows
+data_sources:
+  - process_creation
+capabilities:
+  - query
+implements:
+  elastic: true
+  splunk: false
+  sigma: false
+elastic_rule_id: 70417816-7160-4bef-8182-d62cdbc8514a
