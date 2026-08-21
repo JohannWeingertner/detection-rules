@@ -4,7 +4,7 @@ Started this to expand my skill set from just analyzing logs to detection engine
 
 ## Layout
 
-Flat under `rules/`. Folder names encode **platform**, **rule type**, then a short slug:
+Folder names encode **platform**, **rule type**, then a short slug:
 
 ```text
 rules/
