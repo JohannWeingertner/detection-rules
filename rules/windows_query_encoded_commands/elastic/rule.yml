@@ -1,0 +1,33 @@
+rule_id: d027ec8e-ff56-4a56-bd7c-b574f85da9e1
+kibana_id: 6009dfed-bb6a-46f4-82da-44f8a8040e43
+name: "Windows Rule: Encoded Commands"
+author:
+  - Johann Weingertner
+type: query
+language: kuery
+index:
+  - logs-*
+query: >-
+  event.code : (1 OR 4688) AND process.name : ("powershell.exe" OR "pwsh.exe")
+  AND process.args : ("-enc" OR "-EncodedCommand")
+from: now-30m
+to: now
+interval: 20m
+enabled: true
+max_signals: 100
+risk_score: 21
+severity: low
+version: 1
+revision: 2
+required_fields:
+  - name: event.code
+    type: keyword
+    ecs: true
+  - name: process.name
+    type: keyword
+    ecs: true
+  - name: process.args
+    type: keyword
+    ecs: true
+filters: []
+exceptions_list: []

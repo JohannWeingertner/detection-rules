@@ -1,0 +1,30 @@
+id: windows_sequence_nightmare_eclipse_shieldbreak
+title: Nightmare Eclipse ShieldBreak
+description: Detects the Nightmare Eclipse ShieldBreak exploit via a multi-event EQL sequence (ADS write, MpClient load, MsMpEng access, phoneinfo ADS, taskschd, WER report create/delete).
+status: experimental
+severity: critical
+risk_score: 99
+author:
+  - name: Johann Weingertner
+    url: https://johannweingertner.github.io
+date: 2026-08-18
+modified: 2026-08-21
+tags:
+  - windows
+  - endpoint
+  - exploit
+  - defender
+false_positives: []
+platforms:
+  - windows
+data_sources:
+  - file
+  - library
+  - process_access
+capabilities:
+  - sequence
+implements:
+  elastic: true
+  splunk: false
+  sigma: false
+elastic_rule_id: d692853f-b944-4a55-800c-998c6a6c098d

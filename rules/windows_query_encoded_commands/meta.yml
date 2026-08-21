@@ -1,0 +1,27 @@
+id: windows_query_encoded_commands
+title: Windows Encoded Commands
+description: Detects PowerShell encoded command usage via -enc / -EncodedCommand on process creation events.
+status: experimental
+severity: low
+risk_score: 21
+author:
+  - name: Johann Weingertner
+    url: https://johannweingertner.github.io
+date: 2026-08-18
+modified: 2026-08-18
+tags:
+  - windows
+  - endpoint
+  - powershell
+false_positives: []
+platforms:
+  - windows
+data_sources:
+  - process_creation
+capabilities:
+  - query
+implements:
+  elastic: true
+  splunk: false
+  sigma: false
+elastic_rule_id: d027ec8e-ff56-4a56-bd7c-b574f85da9e1

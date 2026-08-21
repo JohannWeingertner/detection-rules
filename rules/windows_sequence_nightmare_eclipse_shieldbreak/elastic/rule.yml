@@ -1,0 +1,30 @@
+rule_id: d692853f-b944-4a55-800c-998c6a6c098d
+kibana_id: 278b482e-35bc-4b4b-ad88-aeb1bdd180b1
+name: "Windows Rule : Nightmare Eclipse ShieldBreak"
+author:
+  - Johann Weingertner
+type: eql
+language: eql
+index:
+  - logs-*
+query: |
+  sequence by host.id, process.entity_id with maxspan=2m
+    [any where event.code == "11" and file.path : "C:\\*\\BERLIN:stream"]
+    [any where event.code == "7" and dll.path : "C:\\*\\MpClient.dll"]
+    [any where event.code == "10" and winlog.event_data.TargetImage : "C:\\*\\MsMpEng.exe"]
+    [any where event.code == "7" and dll.path : "C:\\Windows\\System32\\phoneinfo.dll:stream"]
+    [any where event.code == "7" and dll.path : "*\\taskschd.dll"]
+    [any where event.code == "11" and file.path : "C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportQueue\\*\\Report.wer"]
+    [any where event.code == "23" and file.path : "C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportQueue\\*\\Report.wer"]
+from: now-7m
+to: now
+interval: 5m
+enabled: true
+max_signals: 100
+risk_score: 99
+severity: critical
+version: 1
+revision: 4
+required_fields: []
+filters: []
+exceptions_list: []
