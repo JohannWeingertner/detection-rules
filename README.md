@@ -1,6 +1,6 @@
 # Detection Rules
 
-Started this to expand my skill set from just analyzing logs to detection engineering.
+Started this to expand my skill set to detection engineering.
 
 ## Layout
 
