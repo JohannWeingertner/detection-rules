@@ -1,0 +1,35 @@
+rule_id: 028095a2-a13f-46de-bbde-4dd392578b92
+kibana_id: 805ac8e0-4084-403a-b875-94afba294969
+name: "Qilin Enabled Linked Connection"
+author:
+  - Johann Weingertner
+type: query
+language: kuery
+index:
+  - apm-*-transaction*
+  - auditbeat-*
+  - endgame-*
+  - filebeat-*
+  - logs-*
+  - packetbeat-*
+  - traces-apm*
+  - winlogbeat-*
+  - -*elastic-cloud-logs-*
+query: |-
+  host.os.type:"windows" and event.category:"registry" and (event.type:"change" or event.type:"creation") and event.code:("12" or "13") and
+  (
+    registry.path:(*Policies\\System\\EnableLinkedConnections or *CurrentVersion\\Policies\\System\\EnableLinkedConnections) or
+    registry.value:"EnableLinkedConnections"
+  ) and
+  registry.data.strings:"1" and registry.data.type:"SZ_DWORD"
+from: now-6m
+to: now
+interval: 5m
+enabled: true
+max_signals: 100
+risk_score: 47
+severity: medium
+version: 1
+revision: 1
+filters: []
+exceptions_list: []

@@ -1,0 +1,28 @@
+rule_id: 8e560c6c-8548-4543-923a-040e9cb714ba
+kibana_id: d7d36064-dbee-4cfc-821b-28d4f18cfa26
+name: "Potential Qilin Staging Activity"
+author:
+  - Johann Weingertner
+type: threshold
+language: kuery
+index:
+  - .alerts-security.alerts-default
+query: |-
+  kibana.alert.rule.name:("Qilin Enabled Linked Connection" or "Qilin Symlink Evaluation Enabled" or "Qilin MxMap has high value")
+from: now-25h
+to: now
+interval: 15m
+enabled: true
+max_signals: 100
+risk_score: 73
+severity: high
+version: 1
+revision: 1
+threshold:
+  field: ["host.name"]
+  value: 3
+  cardinality:
+    field: "kibana.alert.rule.name"
+    value: 3
+filters: []
+exceptions_list: []

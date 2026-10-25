@@ -1,0 +1,30 @@
+id: windows_query_qilin_symlink_evaluation
+title: Qilin Symlink Evaluation Enabled
+description: "Detects when remote symbolic-link evaluation is enabled (SymlinkRemoteToRemoteEvaluation or SymlinkRemoteToLocalEvaluation set to 1), which allows the system to follow symbolic links that point to remote machines."
+status: experimental
+severity: medium
+risk_score: 47
+author:
+  - name: Johann Weingertner
+    url: https://johannweingertner.github.io
+date: 2026-10-25
+modified: 2026-10-25
+tags:
+  - windows
+  - endpoint
+  - registry
+  - qilin
+false_positives:
+  - "Developers enabling symlink evaluation for builds; scope dev hosts out."
+  - "Baseline hardening scripts that set symlink policy."
+platforms:
+  - windows
+data_sources:
+  - registry
+capabilities:
+  - query
+implements:
+  elastic: true
+  splunk: false
+  sigma: false
+elastic_rule_id: 4482bc50-cdd6-408e-a219-845bd5c427dd

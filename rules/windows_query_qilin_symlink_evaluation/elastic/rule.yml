@@ -1,0 +1,33 @@
+rule_id: 4482bc50-cdd6-408e-a219-845bd5c427dd
+kibana_id: 83086fce-09b9-4766-95bc-bae47cdc0605
+name: "Qilin Symlink Evaluation Enabled"
+author:
+  - Johann Weingertner
+type: query
+language: kuery
+index:
+  - apm-*-transaction*
+  - auditbeat-*
+  - endgame-*
+  - filebeat-*
+  - logs-*
+  - packetbeat-*
+  - traces-apm*
+  - winlogbeat-*
+  - -*elastic-cloud-logs-*
+query: |-
+  host.os.type:"windows" and event.category:"registry" and (event.type:"change" or event.type:"creation") and event.code:("12" or "13") and
+  registry.path:(*Control\\FileSystem\\SymlinkRemoteToRemoteEvaluation or
+    *Control\\FileSystem\\SymlinkRemoteToLocalEvaluation) and
+  registry.data.strings:"1" and registry.data.type:"SZ_DWORD"
+from: now-6m
+to: now
+interval: 5m
+enabled: true
+max_signals: 100
+risk_score: 47
+severity: medium
+version: 1
+revision: 0
+filters: []
+exceptions_list: []

@@ -1,0 +1,21 @@
+rule_id: 54535880-71b2-4196-b6f8-047413e8d1b9
+kibana_id: 3e2ae3d9-95fe-44fa-a96c-2e82a354e0e8
+name: "Qilin MxMap has high value"
+author:
+  - Johann Weingertner
+type: esql
+language: esql
+query: |-
+  FROM logs-windows.sysmon_operational-default
+  | WHERE host.os.type == "windows" AND event.type IN ("change", "creation") AND event.code IN ("12", "13") AND (registry.path LIKE "*LanmanServer*Parameters*MaxMpxCt" OR (registry.value == "MaxMpxCt" AND registry.path LIKE "*LanmanServer*Parameters*")) AND registry.data.type == "SZ_DWORD" AND TO_DOUBLE(MV_FIRST(registry.data.strings)) > 50
+from: now-6m
+to: now
+interval: 5m
+enabled: true
+max_signals: 100
+risk_score: 47
+severity: medium
+version: 1
+revision: 0
+filters: []
+exceptions_list: []

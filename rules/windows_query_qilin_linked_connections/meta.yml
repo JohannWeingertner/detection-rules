@@ -1,0 +1,30 @@
+id: windows_query_qilin_linked_connections
+title: Qilin Enabled Linked Connection
+description: "Detects when the EnableLinkedConnections registry value is set to 1, which shares mapped network drives between standard and elevated processes."
+status: experimental
+severity: medium
+risk_score: 47
+author:
+  - name: Johann Weingertner
+    url: https://johannweingertner.github.io
+date: 2026-10-25
+modified: 2026-10-25
+tags:
+  - windows
+  - endpoint
+  - registry
+  - qilin
+false_positives:
+  - "Helpdesk/admins applying Microsoft's documented mapped-drive fix; verify via change ticket."
+  - "Gold images baking the value in during provisioning."
+platforms:
+  - windows
+data_sources:
+  - registry
+capabilities:
+  - query
+implements:
+  elastic: true
+  splunk: false
+  sigma: false
+elastic_rule_id: 028095a2-a13f-46de-bbde-4dd392578b92

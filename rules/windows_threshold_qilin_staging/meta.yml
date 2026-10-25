@@ -1,0 +1,31 @@
+id: windows_threshold_qilin_staging
+title: Potential Qilin Staging Activity
+description: "Fires when a single host triggers all three registry-staging rules (linked connections, symlink evaluation, elevated MaxMpxCt) within 25 hours."
+status: experimental
+severity: high
+risk_score: 73
+author:
+  - name: Johann Weingertner
+    url: https://johannweingertner.github.io
+date: 2026-10-25
+modified: 2026-10-25
+tags:
+  - windows
+  - endpoint
+  - registry
+  - qilin
+  - correlation
+false_positives:
+  - "Back-to-back admin work touching all three settings within a day; verify via change tickets."
+  - "Gold-image builds that bake all three settings; scope build hosts out."
+platforms:
+  - windows
+data_sources:
+  - registry
+capabilities:
+  - threshold
+implements:
+  elastic: true
+  splunk: false
+  sigma: false
+elastic_rule_id: 8e560c6c-8548-4543-923a-040e9cb714ba

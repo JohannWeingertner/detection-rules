@@ -1,0 +1,31 @@
+id: windows_query_qilin_maxmpxct
+title: Qilin MxMap has high value
+description: "Detects when the MaxMpxCt registry value is set above its default of 50, which raises the limit on simultaneous SMB requests the server will handle."
+status: experimental
+severity: medium
+risk_score: 47
+author:
+  - name: Johann Weingertner
+    url: https://johannweingertner.github.io
+date: 2026-10-25
+modified: 2026-10-25
+tags:
+  - windows
+  - endpoint
+  - registry
+  - smb
+  - qilin
+false_positives:
+  - "Legitimate SMB performance tuning that raises MaxMpxCt; verify via change ticket."
+  - "Gold images baking in an elevated value; scope build hosts out."
+platforms:
+  - windows
+data_sources:
+  - registry
+capabilities:
+  - esql
+implements:
+  elastic: true
+  splunk: false
+  sigma: false
+elastic_rule_id: 54535880-71b2-4196-b6f8-047413e8d1b9
