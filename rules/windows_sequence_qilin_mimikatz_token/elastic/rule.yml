@@ -1,0 +1,102 @@
+rule_id: 4704fa19-6e3a-44e9-8151-de31e9abfc0e
+kibana_id: 543b1897-8ad9-4832-ae59-9741095efbec
+name: "Qilin Mimikatz Access Token Module Behavior"
+author:
+  - Johann Weingertner
+type: eql
+language: eql
+index:
+  - logs-*
+query: |
+  sequence by host.id with maxspan=1m
+    [process where host.os.type == "windows" and event.code == "10" and
+     winlog.event_data.TargetImage : (
+       "?:\\WINDOWS\\system32\\winlogon.exe",
+       "?:\\WINDOWS\\system32\\services.exe",
+       "?:\\WINDOWS\\system32\\lsass.exe",
+       "?:\\WINDOWS\\system32\\svchost.exe",
+       "?:\\WINDOWS\\System32\\svchost.exe",
+       "?:\\WINDOWS\\system32\\csrss.exe",
+       "?:\\WINDOWS\\System32\\smss.exe",
+       "?:\\WINDOWS\\system32\\wininit.exe",
+       "?:\\WINDOWS\\System32\\lsaiso.exe",
+       "?:\\WINDOWS\\system32\\lsaiso.exe",
+       "?:\\WINDOWS\\system32\\wbem\\wmiprvse.exe",
+       "?:\\WINDOWS\\System32\\wbem\\wmiprvse.exe",
+       "?:\\WINDOWS\\system32\\wbem\\WmiPrvSE.exe",
+       "?:\\WINDOWS\\System32\\wbem\\WmiPrvSE.exe",
+       "?:\\WINDOWS\\System32\\dllhost.exe",
+       "?:\\WINDOWS\\system32\\dllhost.exe",
+       "?:\\WINDOWS\\System32\\spoolsv.exe",
+       "?:\\WINDOWS\\system32\\spoolsv.exe",
+       "?:\\WINDOWS\\System32\\taskhostw.exe",
+       "?:\\WINDOWS\\system32\\taskhostw.exe",
+       "?:\\WINDOWS\\system32\\LogonUI.exe",
+       "?:\\WINDOWS\\System32\\LogonUI.exe",
+       "?:\\WINDOWS\\system32\\logonui.exe",
+       "?:\\WINDOWS\\System32\\logonui.exe"
+     ) and
+     winlog.event_data.GrantedAccess : (
+       "0x40", "0x0040", "0x0440", "0x1040", "0x1440", "0x1400", "0x1410", "0x1438", "0x143a", "0x1fffff", "0x1FFFFF"
+     ) and
+     not process.executable : (
+       "C:\\Windows\\System32\\*",
+       "C:\\Windows\\SysWOW64\\*",
+       "C:\\ProgramData\\Microsoft\\Windows Defender\\*",
+       "*\\msedge.exe",
+       "*\\msedgewebview2.exe",
+       "*\\elastic-otel-collector.exe",
+       "*\\Sysmon64.exe",
+       "*\\Sysmon.exe",
+       "*\\OneDriveStandaloneUpdater.exe"
+     )]
+    [process where host.os.type == "windows" and event.code == "1" and
+     user.id == "S-1-5-18" and
+     process.parent.executable != null and
+     not process.parent.executable : (
+       "C:\\Windows\\System32\\*",
+       "C:\\Windows\\SysWOW64\\*",
+       "C:\\Windows\\WinSxS\\*",
+       "C:\\ProgramData\\Microsoft\\Windows Defender\\*",
+       "*\\msedge.exe",
+       "*\\msedgewebview2.exe"
+     )]
+from: now-6m
+to: now
+interval: 5m
+enabled: true
+max_signals: 100
+risk_score: 73
+severity: high
+version: 5
+revision: 0
+required_fields:
+  - name: host.name
+    type: keyword
+    ecs: true
+  - name: host.os.type
+    type: keyword
+    ecs: true
+  - name: event.code
+    type: keyword
+    ecs: true
+  - name: event.action
+    type: keyword
+    ecs: true
+  - name: winlog.event_data.TargetImage
+    type: keyword
+    ecs: false
+  - name: winlog.event_data.GrantedAccess
+    type: keyword
+    ecs: false
+  - name: process.executable
+    type: keyword
+    ecs: true
+  - name: process.parent.executable
+    type: keyword
+    ecs: true
+  - name: user.id
+    type: keyword
+    ecs: true
+filters: []
+exceptions_list: []

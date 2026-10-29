@@ -32,6 +32,7 @@ rules/
 | `windows_query_qilin_symlink_evaluation` | Qilin Symlink Evaluation Enabled (building block) | query | medium |
 | `windows_query_qilin_maxmpxct` | Qilin MxMap has high value (building block) | query (ES\|QL) | medium |
 | `windows_threshold_qilin_staging` | Potential Qilin Staging Activity | threshold | high |
+| `windows_sequence_qilin_mimikatz_token` | Qilin Mimikatz Access Token Theft | sequence (EQL) | high |
 
 ## Re-import into Elastic
 

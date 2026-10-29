@@ -1,0 +1,30 @@
+id: windows_sequence_qilin_mimikatz_token
+title: Qilin Mimikatz Access Token Theft
+description: "Detects a non-system process opening a Windows system process with token-duplication rights, followed within one minute by a SYSTEM process started from a non-system parent."
+status: experimental
+severity: high
+risk_score: 73
+author:
+  - name: Johann Weingertner
+    url: https://johannweingertner.github.io
+date: 2026-10-29
+modified: 2026-10-29
+tags:
+  - windows
+  - endpoint
+  - credentials
+  - qilin
+false_positives:
+  - "Administrative tools that legitimately duplicate SYSTEM tokens outside a change window; verify the parent process and user."
+  - "Security products opening system processes with broad access masks; scope known-good agent paths out."
+platforms:
+  - windows
+data_sources:
+  - process_creation
+capabilities:
+  - sequence
+implements:
+  elastic: true
+  splunk: false
+  sigma: false
+elastic_rule_id: 4704fa19-6e3a-44e9-8151-de31e9abfc0e
